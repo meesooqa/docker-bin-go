@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    volumes:
+      - .:/app
+    environment:
+      - GOFLAGS=-mod=vendor
+    working_dir: /app
+    tty: true
+
+  app-lint:
+    image: golangci/golangci-lint:latest
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: golangci-lint run --out-format=tab --tests=false ./...
+    profiles:
+      - lint
