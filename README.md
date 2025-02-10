@@ -1,4 +1,4 @@
-# 
+# Docker-bin-go: Go Dev in Docker
 
 1. `chmod +x ./bin/go`
 2. `docker compose up --build`
