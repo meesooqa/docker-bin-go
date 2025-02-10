@@ -2,43 +2,38 @@ package calc
 
 import (
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestDivide(t *testing.T) {
 	tests := []struct {
-		name        string
-		a           float64
-		b           float64
-		want        float64
-		expectError bool
+		name          string
+		a             float64
+		b             float64
+		expected      float64
+		expectedError string
 	}{
-		{"normal division", 6.0, 3.0, 2.0, false},
-		{"divide by zero", 5.0, 0.0, 0.0, true},
-		{"negative numbers", -10.0, 2.0, -5.0, false},
-		{"zero dividend", 0.0, 5.0, 0.0, false},
-		{"fraction result", 5.0, 2.0, 2.5, false},
-		{"both negative", -15.0, -3.0, 5.0, false},
+		{"normal division", 6.0, 3.0, 2.0, ""},
+		{"divide by zero", 5.0, 0.0, 0.0, "division by zero is not allowed"},
+		{"negative numbers", -10.0, 2.0, -5.0, ""},
+		{"zero dividend", 0.0, 5.0, 0.0, ""},
+		{"fraction result", 5.0, 2.0, 2.5, ""},
+		{"both negative", -15.0, -3.0, 5.0, ""},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			got, err := Divide(tt.a, tt.b)
 
-			if tt.expectError {
-				if err == nil {
-					t.Errorf("expected error but got nil")
-				}
+			assert.Equal(t, tt.expected, got)
+
+			if tt.expectedError != "" {
+				assert.EqualError(t, err, tt.expectedError)
 				return
 			}
 
-			if err != nil {
-				t.Errorf("unexpected error: %v", err)
-				return
-			}
-
-			if got != tt.want {
-				t.Errorf("Divide(%v, %v) = %v, want %v", tt.a, tt.b, got, tt.want)
-			}
+			assert.Nil(t, err)
 		})
 	}
 }
