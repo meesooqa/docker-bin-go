@@ -11,7 +11,7 @@ services:
     tty: true
 
   app-lint:
-    image: golangci/golangci-lint:latest
+    image: golangci/golangci-lint:v1.63-alpine
     volumes:
       - .:/app
     working_dir: /app

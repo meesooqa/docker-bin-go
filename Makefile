@@ -1,5 +1,5 @@
 run:
-	./bin/go run ./app/main.go
+	./bin/go run main.go
 
 tidy:
 	./bin/go mod tidy && ./bin/go mod vendor
@@ -15,7 +15,7 @@ test_race:
 
 test:
 	./bin/go clean -testcache
-	./bin/go test -race -coverprofile=coverage.out ./...
+	./bin/go test -coverprofile=coverage.out ./...
 	grep -v "_mock.go" coverage.out | grep -v mocks > coverage_no_mocks.out
 	./bin/go tool cover -func=coverage_no_mocks.out
 	rm coverage.out coverage_no_mocks.out
